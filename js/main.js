@@ -426,25 +426,50 @@
   }
 
   /* ══════════════════════════════════════════════
-     CONTACT FORM — submission
+     CONTACT FORM — submission (Direct Web3Forms API)
   ══════════════════════════════════════════════ */
   const form = document.getElementById('contact-form');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const name    = form.querySelector('#f-name').value;
-      const email   = form.querySelector('#f-email').value;
-      const subject = form.querySelector('#f-subject').value;
-      const message = form.querySelector('#f-msg').value;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
 
-      /* Open mailto with pre-filled fields */
-      const mailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-      const mailSub  = encodeURIComponent(subject || 'Portfolio Contact');
-      window.location.href = `mailto:vithao.contact@gmail.com?subject=${mailSub}&body=${mailBody}`;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'SENDING... ⏳';
 
-      toastEl.textContent = '✓ Opening email client...';
-      showToast();
-      form.reset();
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          toastEl.textContent = '✓ Tin nhắn đã được gửi thẳng vào hộp thư của ZICO!';
+          showToast();
+          form.reset();
+        } else {
+          throw new Error(data.message || 'Lỗi gửi tin nhắn');
+        }
+      } catch (err) {
+        /* Fallback nếu có sự cố mạng: Mở ứng dụng mail */
+        const name    = form.querySelector('#f-name').value;
+        const email   = form.querySelector('#f-email').value;
+        const subject = form.querySelector('#f-subject').value;
+        const message = form.querySelector('#f-msg').value;
+        const mailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+        const mailSub  = encodeURIComponent(subject || 'Portfolio Contact');
+        window.location.href = `mailto:vithao.contact@gmail.com?subject=${mailSub}&body=${mailBody}`;
+        toastEl.textContent = '✓ Opening email client...';
+        showToast();
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
     });
   }
 
