@@ -1327,14 +1327,52 @@ section {
   color: #FFFFFF;
   letter-spacing: 0.04em;
 }
+.chip-level-badge {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.badge-academic {
+  background: rgba(98, 168, 255, 0.12);
+  color: #8bbfff;
+  border: 1px solid rgba(98, 168, 255, 0.25);
+}
+.badge-project {
+  background: rgba(82, 224, 224, 0.1);
+  color: #52E0E0;
+  border: 1px solid rgba(82, 224, 224, 0.25);
+}
+.badge-basic {
+  background: rgba(146, 153, 168, 0.12);
+  color: #a6b0c2;
+  border: 1px solid rgba(146, 153, 168, 0.2);
+}
+.badge-practiced {
+  background: rgba(82, 224, 224, 0.14);
+  color: #6eeaea;
+  border: 1px solid rgba(82, 224, 224, 0.3);
+}
+.badge-intern {
+  background: rgba(155, 130, 255, 0.14);
+  color: #b7a3ff;
+  border: 1px solid rgba(155, 130, 255, 0.3);
+}
+.badge-interest {
+  background: rgba(255, 185, 80, 0.12);
+  color: #ffc278;
+  border: 1px solid rgba(255, 185, 80, 0.25);
+}
 .chip-level-indicator {
   font-size: 10px;
   letter-spacing: 0.15em;
   color: var(--accent-cyan);
 }
 .chip-context {
-  font-size: 10.5px;
-  color: #768196;
+  font-size: 11px;
+  color: #8c96ab;
+  line-height: 1.4;
 }
 .skill-chip.highlight-game {
   border-left: 2px solid #52E0E0;
